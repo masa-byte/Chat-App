@@ -1,0 +1,15 @@
+.chat-container {
+    display: flex;
+    height: 100vh;
+}
+
+.contacts-panel {
+    width: 30%;
+    overflow: auto;
+    background-color: #e3eeee;
+}
+
+.chat-panel {
+    width: 70%;
+    background: linear-gradient(to right, #dab3e6, #f7d2ea);
+}

@@ -1,0 +1,20 @@
+.contact {
+    cursor: pointer;
+    height: 5%;
+    padding: 10px;
+    margin-bottom: 2px;
+    border-bottom: 1px solid #ccc;
+    font-size: larger;
+    font-weight: bold;
+    font-style: italic;
+    letter-spacing: 1px;
+    background: linear-gradient(to right, #b3b8e6, #c7edeb);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.contact:hover {
+    opacity: 0.5;
+}

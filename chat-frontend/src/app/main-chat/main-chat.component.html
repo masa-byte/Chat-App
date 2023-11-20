@@ -1,0 +1,8 @@
+<div class="chat-container">
+    <div class="contacts-panel">
+        <app-contact-list [contacts]="contacts" (selectContactEvent)="displayContactMessages($event)"></app-contact-list>
+    </div>
+    <div class="chat-panel">
+        <app-chat-window></app-chat-window>
+    </div>
+</div>

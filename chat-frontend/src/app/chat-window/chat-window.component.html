@@ -1,0 +1,23 @@
+<div class="chat-window">
+    <div class="messages">
+        <div *ngFor="let message of messages"
+            [ngClass]="{'sent-by-user': message?.sentByUser, 'received': !message?.sentByUser}">
+            {{ message?.content }}
+            <div class="message-details">
+                <div class="timestamp">{{ formatDate(message!.fileName) | date: 'HH:m'}}</div>
+            </div>
+        </div>
+    </div>
+    <mat-form-field class="input">
+        <mat-label>Type your message here</mat-label>
+        <input matInput maxlength="256" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()">
+        <mat-hint align="end">{{newMessage.length}} / 256</mat-hint>
+        <button matSuffix mat-icon-button aria-label="Clear" (click)="newMessage=' '">
+            <mat-icon>close</mat-icon>
+        </button>
+        <button matSuffix mat-icon-button aria-label="Send" (click)="sendMessage()"
+            [disabled]="newMessage.length === 0">
+            <mat-icon>send</mat-icon>
+        </button>
+    </mat-form-field>
+</div>

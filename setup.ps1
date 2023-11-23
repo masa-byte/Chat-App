@@ -6,10 +6,8 @@ $nestVersion = nest -v
 $ngVersion = ng version
 
 if (-not $npmVersion) {
-    Write-Host "npm is not installed. Downloading npm..."
-
-    # Installing npm
-    Start-Process -FilePath "https://nodejs.org/dist/latest/win-x64/node.exe" -ArgumentList "/install /quiet /norestart" -Wait
+    Write-Host "npm is not installed. Link provided below"
+    Write-Host "https://nodejs.org/en/download"
 }
 else {
     Write-Host "npm is already installed. Proceeding..."

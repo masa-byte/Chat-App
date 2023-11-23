@@ -21,6 +21,6 @@ Kada se sesija zavrsi i pokrene druga, svi folderi se brisu i prave se novi.
 Za oslobadjanje portova na kraju, koristite sledece komande:
 netstat -ano | findstr :<port>
 koji daje PID procesa koji koristi dati port, a onda
-taskkill /PID /F <PID> 
+taskkill /PID <PID> /F 
 
 

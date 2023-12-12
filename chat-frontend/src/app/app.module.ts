@@ -9,6 +9,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatRadioModule } from '@angular/material/radio';
 import { SocketIoModule } from 'ngx-socket-io';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,6 +37,7 @@ import { socketConfig } from 'config';
     MatIconModule,
     MatButtonModule,
     HttpClientModule,
+    MatRadioModule,
     StoreModule.forRoot({
       contact: contactReducer,
       messages: messageReducer

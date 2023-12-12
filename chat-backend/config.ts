@@ -13,4 +13,4 @@ export const clients: Record<number, { name: string; id: number }> = {
     // },
 }
 
-export const num_of_clients = Object.keys(clients).length;
+export const numOfClients = Object.keys(clients).length;

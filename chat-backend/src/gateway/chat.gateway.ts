@@ -1,6 +1,6 @@
 import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import * as chokidar from 'chokidar';
-import { num_of_clients } from 'config';
+import { numOfClients } from 'config';
 import { Message } from 'src/messages/message.model';
 import * as fsPromises from 'fs/promises';
 
@@ -17,8 +17,8 @@ export class ChatGateway {
         const oneLevelAbove = currentWorkingDirectory.substring(0, currentWorkingDirectory.lastIndexOf('\\'));
 
         let key: string;
-        for (let i = 0; i < num_of_clients; i++) {
-            for (let j = i + 1; j < num_of_clients; j++) {
+        for (let i = 0; i < numOfClients; i++) {
+            for (let j = i + 1; j < numOfClients; j++) {
                 key = i + '_' + j;
                 this.clientsDirectories[key] = oneLevelAbove + '\\messages\\clients_' + i + '_' + j;
             }

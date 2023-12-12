@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { clients, num_of_clients } from 'config';
+import { clients, numOfClients } from 'config';
 import { Contact } from '../client/client.model';
 import { Message } from '../message/message.model';
 import * as ContactActions from '../store/contact/contact.actions';
@@ -27,7 +27,7 @@ export class MainChatComponent implements OnInit {
     const portToExclude = portMatch ? +portMatch[0] : null;
     const filteredKeys = Object.keys(clients).filter(port => +port !== portToExclude);
     const contacts = filteredKeys.map(port => clients[+port]);
-    for (let i = 0; i < num_of_clients - 1; i++) {
+    for (let i = 0; i < numOfClients - 1; i++) {
       let contact = {
         clientId: contacts[i].id,
         name: contacts[i].name,

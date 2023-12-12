@@ -4,7 +4,7 @@ import { cipherAlphabet1, cipherAlphabet2 } from 'config';
 @Injectable({
   providedIn: 'root'
 })
-export class MessageCipherService {
+export class FoursquareCipherService {
 
   private plainMatrix1: string[] = [];
   private plainMatrix2: string[] = [];

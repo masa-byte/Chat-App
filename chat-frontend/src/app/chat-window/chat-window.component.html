@@ -8,6 +8,13 @@
             </div>
         </div>
     </div>
+    <div class="crypto-selection">
+        <mat-label>Crypto Algorithm</mat-label>
+        <mat-radio-group [(ngModel)]="selectedCryptoAlgorithm">
+            <mat-radio-button value="foursquare">Foursquare</mat-radio-button>
+            <mat-radio-button value="lea">LEA</mat-radio-button>
+        </mat-radio-group>
+    </div>
     <mat-form-field class="input">
         <mat-label>Type your message here</mat-label>
         <input matInput maxlength="256" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()">

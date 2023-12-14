@@ -3,8 +3,9 @@
         "install:all": "npm run install:backend && npm run install:frontend",
         "install:backend": "cd chat-backend && npm install",
         "install:frontend": "cd chat-frontend && npm install",
-        "start:all": "npm run start:server & npm run start:client1 & npm run start:client2",
+        "start:all": "npm run start:server & npm run start:encryptionServer & npm run start:client1 & npm run start:client2",
         "start:server": "cd chat-backend && start /B nest start",
+        "start:encryptionServer": "cd ciphers && start /B dotnet run",
         "start:client1": "cd chat-frontend && start /B ng serve --port 4200 -o",
         "start:client2": "cd chat-frontend && start /B ng serve --port 4201 -o"
     }

@@ -3,6 +3,34 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "Lea",
+      "request": "launch",
+      "mainClass": "app.ciphers.java.Lea",
+      "projectName": "chat-frontend_cb44cc80"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "app.ciphers.java.Main",
+      "projectName": "chat-frontend_cb44cc80"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "Main",
+      "projectName": "chat-frontend_cb44cc80"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "app.ciphers.Main",
+      "projectName": "chat-frontend_cb44cc80"
+    },
+    {
       "name": "ng serve",
       "type": "pwa-chrome",
       "request": "launch",

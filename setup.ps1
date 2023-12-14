@@ -4,6 +4,8 @@ $npmVersion = npm -v
 $nestVersion = nest -v
 # Checking if angular is installed
 $ngVersion = ng version
+# Checkking if dotnet is installed
+$dotnetVersion = dotnet --version
 
 if (-not $npmVersion) {
     Write-Host "npm is not installed. Link provided below"
@@ -25,8 +27,15 @@ else {
         npm install -g @angular/cli
     }
 }
+if (-not $dotnetVersion) {
+    Write-Host "dotnet is not installed. Link provided below"
+    Write-Host "https://dotnet.microsoft.com/download"
+}
+else {
+    Write-Host "dotnet is already installed. Proceeding..."
+}
 
-if ($npmVersion -and $nestVersion -and $ngVersion) {
+if ($npmVersion -and $nestVersion -and $ngVersion -and $dotnetVersion) {
     Write-Host "Eveything is already installed. Starting..."
 
     # Installing dependencies

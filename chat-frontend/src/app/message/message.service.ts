@@ -2,7 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Socket } from 'ngx-socket-io';
-import { url } from 'config';
+import { url } from 'src/config';
 import { Observable } from 'rxjs';
 import { Message } from './message.model';
 import * as MessageActions from '../store/message/message.actions';

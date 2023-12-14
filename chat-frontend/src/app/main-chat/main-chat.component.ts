@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { clients, numOfClients } from 'config';
+import { clients, numOfClients } from 'src/config';
 import { Contact } from '../client/client.model';
 import { Message } from '../message/message.model';
 import * as ContactActions from '../store/contact/contact.actions';

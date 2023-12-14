@@ -19,7 +19,7 @@ import { ChatWindowComponent } from './chat-window/chat-window.component';
 import { contactReducer } from './store/contact/contact.reducer';
 import { messageReducer } from './store/message/message.reducer';
 import { MessageEffects } from './store/message/message.effects';
-import { socketConfig } from 'config';
+import { socketConfig } from 'src/config';
 
 @NgModule({
   declarations: [

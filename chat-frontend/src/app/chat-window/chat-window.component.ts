@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs';
+import { concatMap, map } from 'rxjs';
 import { Message } from '../message/message.model';
 import { MessageService } from '../message/message.service';
 import { selectMyId, selectSelectedContactId } from '../store/contact/contact.selector';
@@ -29,17 +29,6 @@ export class ChatWindowComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    const bits1 = "11111111111111111111111111111000";
-    const num1 = parseInt(bits1, 2);
-    const num = 5;
-    const rotatedBits = ((num1 << num) | (num1 >>> (32 - num))) & 0xffffffff;
-    console.log(rotatedBits>>> 0);
-    console.log((rotatedBits>>>0).toString(2));
-    const rotatedBits2 = ((num1 >>> num) | (num1 << (32 - num))) & 0xffffffff;
-    console.log(rotatedBits2>>> 0);
-    console.log((rotatedBits2 >>> 0).toString(2).padStart(32, '0'));
-
     this.store.select(selectMyId).subscribe(myId => {
       if (myId != null)
         this.myId = myId;
@@ -51,22 +40,23 @@ export class ChatWindowComponent implements OnInit {
 
     this.store.select(selectMessages).pipe(
       map(messages => Object.entries(messages))
-    ).subscribe(messages => {
+    ).subscribe(async messages => {
       if (messages != undefined) {
         if (messages.length == 0)
           this.messages = [];
         else {
-          this.messages = (messages as [string, Message][]).map(message => message[1]);
-          this.decipherMessages();
+          let mess = (messages as [string, Message][]).map(message => message[1]);
+          await this.decryptMessages(mess);
         }
       }
     });
 
   }
 
-  private decipherMessages() {
+  async decryptMessages(messages: Message[]) {
     let i = 0;
-    this.messages = this.messages.map(message => {
+    this.messages = await Promise.all(messages.map(async (message) => {
+      console.log(message);
       const algorithm = message.content.substring(0, message.content.indexOf(' '));
       let length = '';
       let newContent = '';
@@ -74,22 +64,23 @@ export class ChatWindowComponent implements OnInit {
       if (algorithm == 'f') {
         length = message.content.substring(message.content.indexOf(' '), message.content.indexOf('\n'));
         const content = message.content.substring(message.content.indexOf('\n') + 1);
-        newContent = this.foursquareCipherService.decipherMessage(content);
+        newContent = await this.foursquareCipherService.decryptMessage(content);
       }
       else if (algorithm == 'l') {
         length = message.content.substring(message.content.indexOf(' '), message.content.indexOf('\n'));
         const content = message.content.substring(message.content.indexOf('\n') + 1);
-        newContent = this.leaCipherService.decipherMessage(content);
+        newContent = await this.leaCipherService.decryptMessage(content);
       }
-      
+
       return {
         ...message,
         content: newContent.substring(0, +length)
       };
-    });
+    })
+    );
   }
 
-  sendMessage(): void {
+  async sendMessage(): Promise<void> {
     let message = this.newMessage.trim();
     console.log(`[Chat Window] Sending message: ${message}`);
     let cipheredMessageContent = '';
@@ -98,15 +89,13 @@ export class ChatWindowComponent implements OnInit {
 
       if (this.selectedCryptoAlgorithm == 'foursquare') {
         cipheredMessageContent = 'f ' + message.length + '\n';
-        cipheredMessageContent += this.foursquareCipherService.cipherMessage(message);
+        cipheredMessageContent += await this.foursquareCipherService.encryptMessage(message);
       }
       else if (this.selectedCryptoAlgorithm == 'lea') {
-        //message = "00010000000100010001001000010011000101000001010100010110000101110001100000011001000110100001101100011100000111010001111000011111";
         cipheredMessageContent = 'l ' + message.length + '\n';
-        cipheredMessageContent += this.leaCipherService.cipherMessage(message);
+        cipheredMessageContent += await this.leaCipherService.encryptMessage(message);
       }
-
-      this.messageService.sendMessage(this.myId, this.selectedContactId, cipheredMessageContent).subscribe();
+      this.messageService.sendMessage(this.myId, this.selectedContactId!, cipheredMessageContent).subscribe();
     }
 
     this.newMessage = '';

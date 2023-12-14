@@ -15,6 +15,9 @@ Zelela sam da CRUD operacije nad porukama idu preko HTTP zahteva, a ne preko sok
 Kako se svuda koristi fsPromises, nema race condition-a, jer se sve operacije izvrsavaju asinhrono.
 Takodje su i svi file system watcheri asinhroni, tako da bi trebalo da se sve promene korektno detektuju.
 
+Postoji posebna c# aplikacija koja se stara o kriptovanju i dekriptovanju poruka, posto typescript ne radi dobro sa time.
+Ona se nalazi u folderu Ciphers i bice pokrenuta uz dotnet run zajedno sa ostatkom aplikacije.
+
 Prave se shared folderi i ako se menja izmedju cetova, ucitavace se poruke nastale TOKOM TE SESIJE.
 Kada se sesija zavrsi i pokrene druga, svi folderi se brisu i prave se novi.
 

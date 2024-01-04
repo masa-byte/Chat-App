@@ -73,10 +73,8 @@ public class LeaCipherService
         }
     }
 
-    public byte[] EncryptMessage(string message)
+    public byte[] EncryptMessage(byte[] bytes)
     {
-        byte[] bytes = Encoding.UTF8.GetBytes(message);
-
         // message must be n * 128 bits -> n * 16 bytes
         if (bytes.Length % 16 != 0)
         {
@@ -141,6 +139,12 @@ public class LeaCipherService
             }
         }
         return encryptedBytes;
+    }
+
+    public byte[] EncryptMessage(string message)
+    {
+        byte[] bytes = Encoding.UTF8.GetBytes(message);
+        return EncryptMessage(bytes);
     }
 
     public byte[] DecryptMessage(string encryptedMessage)

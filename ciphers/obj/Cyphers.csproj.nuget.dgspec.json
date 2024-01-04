@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\masac\\OneDrive\\Desktop\\Faks\\Data Encryption\\Project\\Ciphers\\Cyphers.csproj": {}
+    "C:\\Users\\masac\\OneDrive\\Desktop\\Faks\\Data Encryption\\Project\\ciphers\\Cyphers.csproj": {}
   },
   "projects": {
-    "C:\\Users\\masac\\OneDrive\\Desktop\\Faks\\Data Encryption\\Project\\Ciphers\\Cyphers.csproj": {
+    "C:\\Users\\masac\\OneDrive\\Desktop\\Faks\\Data Encryption\\Project\\ciphers\\Cyphers.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\masac\\OneDrive\\Desktop\\Faks\\Data Encryption\\Project\\Ciphers\\Cyphers.csproj",
+        "projectUniqueName": "C:\\Users\\masac\\OneDrive\\Desktop\\Faks\\Data Encryption\\Project\\ciphers\\Cyphers.csproj",
         "projectName": "Cyphers",
-        "projectPath": "C:\\Users\\masac\\OneDrive\\Desktop\\Faks\\Data Encryption\\Project\\Ciphers\\Cyphers.csproj",
+        "projectPath": "C:\\Users\\masac\\OneDrive\\Desktop\\Faks\\Data Encryption\\Project\\ciphers\\Cyphers.csproj",
         "packagesPath": "C:\\Users\\masac\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\masac\\OneDrive\\Desktop\\Faks\\Data Encryption\\Project\\Ciphers\\obj\\",
+        "outputPath": "C:\\Users\\masac\\OneDrive\\Desktop\\Faks\\Data Encryption\\Project\\ciphers\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\masac\\AppData\\Roaming\\NuGet\\NuGet.Config",

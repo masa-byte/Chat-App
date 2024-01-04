@@ -20,12 +20,32 @@ export class LeaCipherService {
     }
   }
 
+  async encryptBinaryFile(message: string): Promise<string> {
+    try {
+      const response = await lastValueFrom(this.http.post(encryptionUrl + "/lea/fileEncrypt", { message }, { responseType: 'text' }));
+      return response as string;
+    } catch (error) {
+      console.error('Error encrypting file', error);
+      return '';
+    }
+  }
+
   async decryptMessage(message: string): Promise<string> {
     try {
       const response = await lastValueFrom(this.http.post(encryptionUrl + "/lea/decrypt", { message }, { responseType: 'text' }));
       return response as string;
     } catch (error) {
       console.error('Error encrypting message', error);
+      return '';
+    }
+  }
+
+  async decryptBinaryFile(message: string): Promise<string> {
+    try {
+      const response = await lastValueFrom(this.http.post(encryptionUrl + "/lea/fileDecrypt", { message }, { responseType: 'text' }));
+      return response as string;
+    } catch (error) {
+      console.error('Error encrypting file', error);
       return '';
     }
   }

@@ -35,7 +35,7 @@ export class MessageService {
   }
 
   private initializeSocket() {
-    const eventName = 'newFile_' + this.myId;
+    const eventName = 'newMessage_' + this.myId;
     this.socket.fromEvent(eventName).pipe().subscribe((message: any) => {
       const { receivedMessage, id } = message;
       this.receiveMessage(receivedMessage, id);

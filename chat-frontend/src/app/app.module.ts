@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatRadioModule } from '@angular/material/radio';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { SocketIoModule } from 'ngx-socket-io';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ import { contactReducer } from './store/contact/contact.reducer';
 import { messageReducer } from './store/message/message.reducer';
 import { MessageEffects } from './store/message/message.effects';
 import { socketConfig } from 'src/config';
+import { fileReducer } from './store/file/file.reducer';
 
 @NgModule({
   declarations: [
@@ -38,9 +40,11 @@ import { socketConfig } from 'src/config';
     MatButtonModule,
     HttpClientModule,
     MatRadioModule,
+    MatSnackBarModule,
     StoreModule.forRoot({
       contact: contactReducer,
-      messages: messageReducer
+      messages: messageReducer,
+      file: fileReducer
     }, {}),
     EffectsModule.forRoot([MessageEffects, ]),
     StoreDevtoolsModule.instrument({

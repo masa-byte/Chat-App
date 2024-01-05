@@ -14,8 +14,11 @@ Posto je skoro sve implementirano asinhrono, nema nikakvog blokiranja niti cekan
 Zelela sam da CRUD operacije nad porukama idu preko HTTP zahteva, a ne preko soketa, jer oni meni sluze za obavestenja file system watchera.
 Kako se svuda koristi fsPromises, nema race condition-a, jer se sve operacije izvrsavaju asinhrono.
 Takodje su i svi file system watcheri asinhroni, tako da bi trebalo da se sve promene korektno detektuju.
+Enkriptovani fajlovi se cuvaju u files/encrypted direktorijumu, koji se ponasa kao neka vrsta baze, a kada stignu klijentu, onda se vrsi dekripcija
+sa klijentske strane i upisuju se u files/decrypted, sto simulira da korisnik downloaduje fajl koji se onda lokalno dekriptuje i takav i sacuva.
 
 Postoji posebna c# aplikacija koja se stara o kriptovanju i dekriptovanju poruka, posto typescript ne radi dobro sa time.
+Ova aplikacija takodje vrsi hesiranje fajlova za verifikaciju integriteta.
 Ona se nalazi u folderu Ciphers i bice pokrenuta uz dotnet run zajedno sa ostatkom aplikacije.
 
 Prave se shared folderi i ako se menja izmedju cetova, ucitavace se poruke nastale TOKOM TE SESIJE.

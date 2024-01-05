@@ -11,6 +11,7 @@ import { FileService } from '../file/file.service';
 import { MyFile } from '../file/file.model';
 import { selectCurrentFile } from '../store/file/file.selector';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ShaHashService } from '../ciphers/sha-hash.service';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class ChatWindowComponent implements OnInit {
     private fileService: FileService,
     private foursquareCipherService: FoursquareCipherService,
     private leaCipherService: LeaCipherService,
+    private shaHashService: ShaHashService,
     private snackBar: MatSnackBar,
     private store: Store<{}>
   ) { }
@@ -118,26 +120,39 @@ export class ChatWindowComponent implements OnInit {
     name = await this.leaCipherService.decryptMessage(name);
     name = name.substring(0, +nameLength);
     const extension = this.currentFile!.fileExtension;
-    let [contentLength, content] = (this.currentFile!.content as string).split('\n');
-    content = await this.leaCipherService.decryptBinaryFile(content);
 
+    let [contentLength, fileHash, content] = (this.currentFile!.content as string).split('\n');
+    content = await this.leaCipherService.decryptBinaryFile(content);
+    
     let uint8Array = new Uint8Array(content.split(',').map(Number));
     uint8Array = uint8Array.slice(0, +contentLength);
+    const checkFileHash = await this.shaHashService.hashFile(uint8Array.toString());
 
-    const decipheredFile: MyFile = {
-      sentByUser: false,
-      fileName: name,
-      fileExtension: extension,
-      content: uint8Array
-    };
-    this.fileService.saveDecryptedFile(this.myId, decipheredFile).subscribe();
+    if (checkFileHash != fileHash) {
+      this.snackBar.open(`File ${name} is corrupted!`, 'Close',
+        {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center'
+        });
+      return;
+    }
+    else {
+      this.snackBar.open(`File ${name} received!`, 'Close',
+        {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center'
+        });
 
-    this.snackBar.open(`File ${name} received!`, 'Close',
-      {
-        duration: 5000,
-        verticalPosition: 'top',
-        horizontalPosition: 'center'
-      });
+      const decipheredFile: MyFile = {
+        sentByUser: false,
+        fileName: name,
+        fileExtension: extension,
+        content: uint8Array
+      };
+      this.fileService.saveDecryptedFile(this.myId, decipheredFile).subscribe();
+    }
   }
 
   onFileSelected(event: any) {
@@ -155,19 +170,23 @@ export class ChatWindowComponent implements OnInit {
       cipheredMessageContent += await this.leaCipherService.encryptMessage(message);
       this.messageService.sendMessage(this.myId, this.selectedContactId!, cipheredMessageContent).subscribe();
 
-      const uint8Array = new Uint8Array(fileContent as ArrayBuffer);
-      const stringArray = uint8Array.toString();
-      let cipheredFileContent = uint8Array.length + '\n';
-      cipheredFileContent += await this.leaCipherService.encryptBinaryFile(stringArray);
-      
       let cipheredFileName = file.name.length + '_';
       cipheredFileName += await this.leaCipherService.encryptMessage(file.name);
+
+      const uint8Array = new Uint8Array(fileContent as ArrayBuffer);
+      const stringArray = uint8Array.toString();
+      
+      const fileHash = await this.shaHashService.hashFile(stringArray);
+
+      let cipheredFileContent = uint8Array.length + '\n';
+      cipheredFileContent += fileHash + '\n';
+      cipheredFileContent += await this.leaCipherService.encryptBinaryFile(stringArray);
 
       const cipheredFile: MyFile = {
         sentByUser: true,
         fileName: cipheredFileName,
         fileExtension: file.type,
-        content: cipheredFileContent
+        content: cipheredFileContent,
       };
 
       this.fileService.sendFile(this.myId, this.selectedContactId!, cipheredFile).subscribe();

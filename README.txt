@@ -1,32 +1,27 @@
-Pozdrav :D
-Da biste pokrenuli aplikaciju, potrebno je da imate node.js instaliran, a sa njim i npm, zatim ng za Angular i nest za Nest.
-Ja sam napisala setup.ps1 koji ce da skine node.js ako ga vec nemate, onda ga instalirajte i ponovo pokrenite setup.ps1 koji ce sada
-da pokrene instalira i ng i nest, a zatim sledecim pokretanjem podici ce server i 2 klijenta i otvorice klijente u web browseru.
+To run the application, you need to have Node.js installed, along with npm, ng for Angular, and nest for Nest.
+I've written a setup.ps1 script that will download Node.js if you don't already have it, then install it. After that, rerun setup.ps1, which will install ng and nest. Finally, running setup.ps1 again will start the server and 2 clients, opening them in a web browser.
 
-Aplikacija je napravljena da moze da radi za vise klijenata, ali je potrebno da se u config fajlovima i za backend i za frontend 
-dodeli port na kome ce da se pokrenu klijenti i sa tim i id i ime.
-Ukoliko zelite da probate sa 3 klijenta, config fajlovi su podeseni (otkomentarisite deo), samo treba dodati u package.json sledecu liniju:
+The application is designed to work for multiple clients, but you need to assign a port for each client in the config files, both for the backend and frontend, along with an ID and name.
+If you want to try it with 3 clients, the config files are configured (uncomment the part), and you just need to add the following line in package.json:
 "start:client3": "cd chat-frontend && start /B ng serve --port 4202 -o"
-(i zarez na kraju prethodne linije)
+(and a comma at the end of the previous line)
 
-Implementirane su sve CRUD metode, ali samo dve se koriste kod klijenta, jer je to bilo u sklopu zadatka za sada.
-Posto je skoro sve implementirano asinhrono, nema nikakvog blokiranja niti cekanja.
-Zelela sam da CRUD operacije nad porukama idu preko HTTP zahteva, a ne preko soketa, jer oni meni sluze za obavestenja file system watchera.
-Kako se svuda koristi fsPromises, nema race condition-a, jer se sve operacije izvrsavaju asinhrono.
-Takodje su i svi file system watcheri asinhroni, tako da bi trebalo da se sve promene korektno detektuju.
-Enkriptovani fajlovi se cuvaju u files/encrypted direktorijumu, koji se ponasa kao neka vrsta baze, a kada stignu klijentu, onda se vrsi dekripcija
-sa klijentske strane i upisuju se u files/decrypted, sto simulira da korisnik downloaduje fajl koji se onda lokalno dekriptuje i takav i sacuva.
+All CRUD methods are implemented, but only two are used by the client for now, as it was part of the task. Since almost everything is implemented asynchronously, there is no blocking or waiting.
+I wanted CRUD operations on messages to go through HTTP requests rather than sockets because sockets are used for notifications from the file system watcher.
+Since fsPromises is used everywhere, there are no race conditions as all operations are executed asynchronously.
+Also, all file system watchers are asynchronous, so all changes should be detected correctly.
+Encrypted files are stored in the files/encrypted directory, which acts as a kind of database, and when they reach the client, decryption is performed on the client side and written to files/decrypted, simulating the user downloading a file, decrypting it locally, and saving it.
 
-Postoji posebna c# aplikacija koja se stara o kriptovanju i dekriptovanju poruka, posto typescript ne radi dobro sa time.
-Ova aplikacija takodje vrsi hesiranje fajlova za verifikaciju integriteta.
-Ona se nalazi u folderu Ciphers i bice pokrenuta uz dotnet run zajedno sa ostatkom aplikacije.
+There is a separate C# application responsible for encrypting and decrypting messages, as TypeScript doesn't work well with it.
+This application also hashes files for integrity verification.
+It is located in the Ciphers folder and will be run with dotnet run along with the rest of the application.
 
-Prave se shared folderi i ako se menja izmedju cetova, ucitavace se poruke nastale TOKOM TE SESIJE.
-Kada se sesija zavrsi i pokrene druga, svi folderi se brisu i prave se novi.
+Shared folders are created, and if there are changes between chats, messages created DURING THAT SESSION will be loaded.
+When the session ends and another one starts, all folders are deleted and new ones are created.
 
-Za oslobadjanje portova na kraju, koristite sledece komande:
+To free up ports at the end, use the following commands:
 netstat -ano | findstr :<port>
-koji daje PID procesa koji koristi dati port, a onda
-taskkill /PID <PID> /F 
+which gives the PID of the process using the given port, then
+taskkill /PID <PID> /F
 
 
